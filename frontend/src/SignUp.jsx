@@ -1,19 +1,15 @@
-// src/App.jsx
+// src/SignUp.jsx
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-function App() {
+function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
 
-  // When user clicks Sign In
-  const handleSignIn = (e) => {
+  const handleSignUp = (e) => {
     e.preventDefault()
 
-    // Simple front-end validation
     if (!email || !password) {
       setError('Please fill all fields')
       return
@@ -22,38 +18,28 @@ function App() {
     setError('')
     setLoading(true)
 
-    // Small delay then go to real Netflix login page
     setTimeout(() => {
       setLoading(false)
+      alert('Account created (mock). Redirecting to Netflix Sign In.')
       window.location.href = 'https://www.netflix.com/login'
-    }, 500)
-  }
-
-  // When user clicks "Sign up now"
-  const handleGoToSignUp = () => {
-    // Go to your own Sign Up page in this project
-    // (handled by <Route path="/signup" element={<SignUp />} /> in main.jsx)
-    navigate('/signup')
+    }, 800)
   }
 
   return (
     <div className="page">
       <div className="card">
-        {/* Logo + heading */}
         <div>
           <div className="logo">NETFLIX</div>
-          <h2 className="heading">Sign In</h2>
+          <h2 className="heading">Create account</h2>
         </div>
 
-        {/* Error message */}
         {error && <div className="error">{error}</div>}
 
-        {/* Sign In form */}
-        <form onSubmit={handleSignIn}>
+        <form onSubmit={handleSignUp}>
           <div className="field">
             <input
               type="email"
-              placeholder="Email or phone number"
+              placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -61,33 +47,28 @@ function App() {
           <div className="field">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Create password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
           <button className="button" type="submit" disabled={loading}>
-            {loading ? 'Signing In...' : 'Sign In'}
+            {loading ? 'Creating...' : 'Sign Up'}
           </button>
         </form>
 
-        {/* Bottom text */}
         <p className="bottom-text">
-          New to Netflix?{' '}
+          Already have an account?{' '}
           <span
             style={{ cursor: 'pointer', fontWeight: 600 }}
-            onClick={handleGoToSignUp}
+            onClick={() => (window.location.href = 'https://www.netflix.com/login')}
           >
-            Sign up now
+            Sign in
           </span>
-        </p>
-        <p className="small">
-          This page is protected by Google reCAPTCHA to ensure you&apos;re not a bot.
         </p>
       </div>
     </div>
   )
 }
 
-export default App
+export default SignUp
